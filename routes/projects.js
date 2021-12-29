@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const Projects = require('../models/projects');
-const getProject = require('../middlewares/getProject');
 
 // import cloudinary upload
 const { upload, cloudinary } = require('../cloudinary');
+
+// Import Middleware
+const getProject = require('../middlewares/getProject');
 
 // Get all projects
 router.get('/', async (req, res) => {
