@@ -11,6 +11,10 @@ const user = require('./routes/user');
 
 const authenticateToken = require('./middlewares/authenticateToken');
 
+app.get('/', (req, res) => {
+	res.send('Hello From Grafixo Backend');
+});
+
 //Middlewares
 app.use(express.json());
 
