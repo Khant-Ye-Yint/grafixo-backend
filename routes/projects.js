@@ -8,6 +8,7 @@ const { upload, cloudinary } = require('../cloudinary');
 
 // Import Middleware
 const getProject = require('../middlewares/getProject');
+const authenticateToken = require('../middlewares/authenticateToken');
 
 // Get all projects
 router.get('/', async (req, res) => {
@@ -43,31 +44,37 @@ router.post('/', upload.single('image'), async (req, res) => {
 });
 
 // Update project
-router.patch('/:id', getProject, upload.single('image'), async (req, res) => {
-	if (req.body.name != null) {
-		res.project.name = req.body.name;
-	}
-	if (req.body.price != null) {
-		res.project.price = req.body.price;
-	}
-	if (req.body.description != null) {
-		res.project.description = req.body.description;
-	}
+router.patch(
+	'/:id',
+	authenticateToken,
+	getProject,
+	upload.single('image'),
+	async (req, res) => {
+		if (req.body.name != null) {
+			res.project.name = req.body.name;
+		}
+		if (req.body.price != null) {
+			res.project.price = req.body.price;
+		}
+		if (req.body.description != null) {
+			res.project.description = req.body.description;
+		}
 
-	try {
-		await cloudinary.uploader.destroy(res.project.public_id);
-		res.project.public_id = req.file.filename;
-		res.project.imgUrl = req.file.path;
+		try {
+			await cloudinary.uploader.destroy(res.project.public_id);
+			res.project.public_id = req.file.filename;
+			res.project.imgUrl = req.file.path;
 
-		const newProject = await res.project.save();
-		res.status(401).json(newProject);
-	} catch (err) {
-		res.status(500).json({ message: err.message });
+			const newProject = await res.project.save();
+			res.status(401).json(newProject);
+		} catch (err) {
+			res.status(500).json({ message: err.message });
+		}
 	}
-});
+);
 
 // Delete one project
-router.delete('/:id', getProject, async (req, res) => {
+router.delete('/:id', authenticateToken, getProject, async (req, res) => {
 	try {
 		// Delete image from cloudinary
 		await cloudinary.uploader.destroy(res.project.public_id);

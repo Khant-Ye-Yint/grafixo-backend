@@ -9,7 +9,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const projects = require('./routes/projects');
 const user = require('./routes/user');
 
-const authenticateToken = require('./middlewares/authenticateToken');
+//const authenticateToken = require('./middlewares/authenticateToken');
 
 app.get('/', (req, res) => {
 	res.send('Hello From Grafixo Backend');
@@ -22,7 +22,7 @@ app.use(express.json());
 mongoose.connect(MONGODB_URI, () => console.log('Databse connected'));
 
 // Use Routes
-app.use('/api/projects', authenticateToken, projects);
+app.use('/api/projects', projects);
 app.use('/api/user', user);
 
 // Listen to server
