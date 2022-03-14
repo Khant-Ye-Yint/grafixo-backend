@@ -5,6 +5,10 @@ const projectSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	client: {
+		type: String,
+		required: true,
+	},
 	price: {
 		type: Number,
 		required: true,
@@ -13,14 +17,30 @@ const projectSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	imgUrl: {
+	vidUrl: {
 		type: String,
 		required: true,
 	},
-	public_id: {
+	thumbnailUrl: {
 		type: String,
 		required: true,
 	},
+	imgUrls: {
+		type: [String],
+		required: true,
+	},
+	featured: {
+		type: Boolean,
+		required: true,
+	},
+	category: {
+		type: String,
+		required: true,
+	},
+	// public_id: {
+	// 	type: String,
+	// 	required: true,
+	// },
 	date: {
 		type: Date,
 		required: true,

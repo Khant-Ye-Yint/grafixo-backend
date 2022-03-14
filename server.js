@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 //Middlewares
+app.use(cors());
 app.use(express.json());
 
 // Connect to database
@@ -26,4 +28,8 @@ app.use('/api/projects', projects);
 app.use('/api/user', user);
 
 // Listen to server
-app.listen(PORT, () => console.log(`Server is listening at PORT ${PORT}...`));
+app.listen(PORT, () =>
+	console.log(
+		`Server is listening at PORT ${PORT}, url: http://localhost:${PORT}`
+	)
+);
