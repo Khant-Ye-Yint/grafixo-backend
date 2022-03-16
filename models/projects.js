@@ -26,7 +26,7 @@ const projectSchema = new mongoose.Schema({
 		required: true,
 	},
 	imgUrls: {
-		type: [String],
+		type: String,
 		required: true,
 	},
 	featured: {

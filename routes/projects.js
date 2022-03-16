@@ -39,8 +39,6 @@ router.post('/', async (req, res) => {
 		featured: req.body.featured,
 	});
 
-	console.log(req.body);
-
 	try {
 		const newProject = await project.save();
 		res.status(201).json(newProject);
